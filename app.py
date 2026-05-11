@@ -44,12 +44,11 @@ def data():
 @app.route('/control', methods=['POST'])
 def control():
     global system_status
-
-    data = request.get_json()
+    data = request.get_json(silent=True)
     if data and "action" in data:
         system_status = data["action"]
-
     return jsonify({"status": system_status})
 
+# Only used for local testing — Render uses gunicorn
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))

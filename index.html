@@ -2,9 +2,7 @@
 <html>
 <head>
     <title>SCADA System</title>
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <style>
         body {
             margin: 0;
@@ -12,7 +10,6 @@
             background-color: #0b0f14;
             color: #e6edf3;
         }
-
         header {
             padding: 15px;
             background: #121821;
@@ -21,11 +18,7 @@
             align-items: center;
             border-bottom: 1px solid #1f2937;
         }
-
-        header h1 {
-            font-size: 18px;
-            margin: 0;
-        }
+        header h1 { font-size: 18px; margin: 0; }
 
         .status-indicator {
             padding: 6px 12px;
@@ -33,7 +26,6 @@
             font-weight: bold;
             background: #374151;
         }
-
         .status-on { background: #16a34a; }
         .status-off { background: #dc2626; }
 
@@ -43,22 +35,19 @@
             gap: 15px;
             padding: 15px;
         }
-
         .card {
             background: #111827;
             padding: 15px;
             border-radius: 8px;
             border: 1px solid #1f2937;
         }
-
         .station {
             padding: 10px;
             margin: 8px 0;
             border-radius: 6px;
             background: #1f2937;
         }
-
-        .fault { border-left: 5px solid #dc2626; }
+        .fault  { border-left: 5px solid #dc2626; }
         .normal { border-left: 5px solid #16a34a; }
 
         button {
@@ -69,17 +58,20 @@
             cursor: pointer;
             font-weight: bold;
         }
-
-        .on-btn { background: #16a34a; color: white; }
+        .on-btn  { background: #16a34a; color: white; }
         .off-btn { background: #dc2626; color: white; }
 
+        .chart-wrap {
+            position: relative;
+            height: 280px;
+            width: 100%;
+        }
         canvas {
             background: #0b0f14;
             border-radius: 6px;
         }
     </style>
 </head>
-
 <body>
 
 <header>
@@ -88,23 +80,22 @@
 </header>
 
 <div class="container">
-
     <div class="card">
         <h2>Stations</h2>
         <div id="stations"></div>
-
-        <button class="on-btn" onclick="controlSystem('ON')">Start</button>
+        <button class="on-btn"  onclick="controlSystem('ON')">Start</button>
         <button class="off-btn" onclick="controlSystem('OFF')">Stop</button>
     </div>
 
     <div class="card">
         <h2>Voltage Trend (Station A)</h2>
-        <canvas id="chart"></canvas>
+        <div class="chart-wrap">
+            <canvas id="chart"></canvas>
+        </div>
     </div>
-
 </div>
 
-<script src="/static/script.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 </html>
