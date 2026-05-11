@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 import random
+import os
 
 app = Flask(__name__)
 
@@ -17,17 +18,18 @@ def home():
 
 @app.route('/data')
 def data():
-    global stations
-
     result = {}
 
     for key in stations:
         if system_status == "ON":
-            stations[key] = random.randint(170, 260)
+            voltage = random.randint(170, 260)
+        else:
+            voltage = 0
 
-        voltage = stations[key]
-
-        fault = "FAULT" if (voltage > 240 or voltage < 180) else "NORMAL"
+        if system_status == "OFF":
+            fault = "SYSTEM OFF"
+        else:
+            fault = "FAULT" if (voltage > 240 or voltage < 180) else "NORMAL"
 
         result[key] = {
             "voltage": voltage,
@@ -49,9 +51,5 @@ def control():
 
     return jsonify({"status": system_status})
 
-if __name__ == '__main__':
-    
-    import os
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
